@@ -28,7 +28,8 @@ class Mission(models.Model):
         ("planned", "Planned"),
         ("in_progress", "In Progress"),
         ("completed", "Completed"),
-        ("aborted", "Aborted")
+        ("aborted", "Aborted"),
+        ("paused", "Paused"),
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     drone = models.ForeignKey(Drone, on_delete=models.CASCADE)
