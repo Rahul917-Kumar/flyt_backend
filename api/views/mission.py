@@ -9,7 +9,7 @@ from django.utils import timezone
 
 class MissionListCreateAPIView(APIView):
     def get(self, request):
-        missions = Mission.objects.all()
+        missions = Mission.objects.all().order_by('-created_at') 
         serializer = MissionSerializer(missions, many=True)
         return Response({"message": "Successfully fetched all missions", "data": serializer.data}, status=status.HTTP_200_OK)
 
@@ -61,5 +61,8 @@ class AbortMissionAPIView(APIView):
             mission.status = "aborted"
             mission.end_time = timezone.now()
             mission.save()
+            drone = mission.drone
+            drone.status = "available"
+            drone.save()
             return Response({"message": "Mission aborted."}, status=status.HTTP_200_OK)
         return Response({"message": "Cannot abort in current state."}, status=status.HTTP_400_BAD_REQUEST)

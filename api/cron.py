@@ -11,6 +11,7 @@ def start_missions():
         # Simulate transition to in_progress
         mission.status = 'in_progress'
         mission.start_time = mission.start_time or timezone.now()
+        mission.estimated_time_remaining = 20 # seconds
         mission.save()
 
         # Update drone status as well
@@ -23,7 +24,6 @@ def simulate_mission_progress():
     missions = Mission.objects.filter(status='in_progress')
 
     for mission in missions:
-        # Progress update logic: +34 per cron, after 3 updates reaches ~100
         mission.progress += 100
         drone = mission.drone
 
