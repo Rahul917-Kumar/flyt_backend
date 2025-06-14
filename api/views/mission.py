@@ -24,7 +24,8 @@ class MissionDetailAPIView(APIView):
     def get(self, request, pk):
         mission = get_object_or_404(Mission, pk=pk)
         serializer = MissionSerializer(mission)
-        return Response(serializer.data)
+        return Response({"message": "Successfully fetched mission details", "data": serializer.data}, status=status.HTTP_201_CREATED)
+
 
     def patch(self, request, pk):
         mission = get_object_or_404(Mission, pk=pk)

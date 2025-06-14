@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CRONJOBS = [
+    (
+        "*/1 * * * *",
+        "api.cron.start_missions"
+    ),
+    ('*/1 * * * *', 'api.cron.simulate_mission_progress'),
+]
